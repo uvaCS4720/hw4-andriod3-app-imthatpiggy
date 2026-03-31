@@ -32,80 +32,14 @@ import androidx.compose.ui.unit.sp
 import edu.nd.pmcburne.hello.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainScreen(viewModel, modifier = Modifier.padding(innerPadding))
-                }
+                UVAScreen()
             }
         }
-    }
-}
-
-@Composable
-fun MainScreen(
-    viewModel: MainViewModel,
-    modifier: Modifier = Modifier
-) {
-    Column(modifier = modifier) {
-        Text(
-            "Welcome to the Counter App!"
-        )
-        Spacer(modifier = modifier.height(16.dp))
-        Counter(viewModel)
-    }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun PreviewMainScreen() {
-    MyApplicationTheme {
-        MainScreen(viewModel = MainViewModel())
-    }
-}
-
-@Composable
-fun Counter(
-    viewModel: MainViewModel,
-    modifier: Modifier = Modifier
-) {
-    val uiState by viewModel.uiState.collectAsState()
-    val counterValue = uiState.counterValue
-    Row {
-        Text("Value: $counterValue")
-        Button( // increment button
-            onClick = { viewModel.incrementCounter() },
-            modifier = modifier
-        ) { Text("+") }
-        Button( //decrement button
-            onClick = { viewModel.decrementCounter() },
-            enabled = viewModel.isDecrementEnabled,
-            modifier = modifier
-        ) {
-            Text("-")
-        }
-        Button( // reset button
-            onClick = { viewModel.incrementCounter() },
-            enabled = viewModel.isResetEnabled,
-            modifier = modifier
-        ) {
-            Text("Reset")
-        }
-
-    }
-}
-
-
-@Preview(name = "Light Mode Counter", showBackground = true)
-@Preview(name = "Dark Mode Counter", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun CounterPreview() {
-    MyApplicationTheme {
-        Counter(viewModel = MainViewModel(0))
     }
 }
